@@ -15,6 +15,22 @@
     --text: #e2e8f0; --text-muted: #64748b; --text-dim: #475569;
     --success: #22c55e; --success-glow: rgba(34,197,94,0.12);
     --warning: #f59e0b; --error: #ef4444;
+    --preview-stroke: rgba(59,130,246,0.35);
+    --preview-bg: #0a0c10;
+    --icon-stroke: #475569;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f8f9fb; --surface: #ffffff; --surface-hover: #f1f3f5;
+      --border: #dde1e7; --border-active: #3b82f6;
+      --accent: #2563eb; --accent-glow: rgba(37,99,235,0.08);
+      --text: #1a1d23; --text-muted: #5c6370; --text-dim: #8b919a;
+      --success: #16a34a; --success-glow: rgba(22,163,74,0.08);
+      --warning: #d97706; --error: #dc2626;
+      --preview-stroke: rgba(37,99,235,0.5);
+      --preview-bg: #f0f2f5;
+      --icon-stroke: #8b919a;
+    }
   }
   body {
     background: var(--bg); color: var(--text);
@@ -80,7 +96,7 @@
   /* Preview canvas */
   #preview {
     width: 100%; height: 280px; border-radius: 8px;
-    background: var(--bg); cursor: grab; border: 1px solid var(--border);
+    background: var(--preview-bg); cursor: grab; border: 1px solid var(--border);
   }
 
   /* Stats grid */
@@ -143,7 +159,7 @@
   <!-- Drop zone -->
   <div id="dropzone" class="dropzone">
     <input type="file" id="fileinput" accept=".gml,.xml,.citygml" style="display:none">
-    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--text-dim)" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--icon-stroke)" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
     <p class="main">Drop CityGML file here</p>
     <p class="sub">.gml, .xml, .citygml</p>
   </div>
@@ -463,7 +479,7 @@ function drawPreview() {
   }
 
   ctx.clearRect(0, 0, W, H);
-  ctx.strokeStyle = 'rgba(59,130,246,0.35)';
+  ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--preview-stroke').trim();
   ctx.lineWidth = 0.5;
   for (const poly of previewPolygons) {
     if (poly.length < 2) continue;
